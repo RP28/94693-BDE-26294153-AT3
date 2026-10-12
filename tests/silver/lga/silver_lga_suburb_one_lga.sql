@@ -1,6 +1,6 @@
-SELECT
+select
     suburb_name,
-    COUNT(DISTINCT lga_code) AS lga_count
-FROM {{ ref('silver_lga_suburb') }}
-GROUP BY suburb_name
-HAVING COUNT(DISTINCT lga_code) > 1
+    count(distinct lga_code) as lga_count
+from {{ ref('silver_lga_suburb') }}
+group by suburb_name
+having count(distinct lga_code) > 1

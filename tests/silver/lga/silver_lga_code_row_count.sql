@@ -1,8 +1,8 @@
-SELECT 1
-WHERE (
-    SELECT COUNT(*)
-    FROM {{ ref('silver_lga_code') }}
+select 1
+where (
+    select count(*)
+    from {{ ref('silver_lga_code') }}
 ) <> (
-    SELECT COUNT(*)
-    FROM {{ source('bronze', 'raw_lga_code') }}
+    select count(*)
+    from {{ source('bronze', 'raw_lga_code') }}
 )
