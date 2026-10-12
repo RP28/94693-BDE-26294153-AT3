@@ -1,0 +1,108 @@
+version: 2
+sources:
+  - name: bronze
+    schema: bronze
+
+    tables:
+      - name: raw_listings
+        columns:
+          - name: listing_id
+            data_tests:
+              - not_blank
+
+          - name: scrape_id
+            data_tests:
+              - not_blank
+
+          - name: scraped_date
+            data_tests:
+              - not_blank
+
+          - name: host_id
+            data_tests:
+              - not_blank
+
+          - name: host_is_superhost
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['t', 'f', '']
+
+          - name: listing_neighbourhood
+            data_tests:
+              - not_blank
+
+          - name: property_type
+            data_tests:
+              - not_blank
+
+          - name: room_type
+            data_tests:
+              - not_blank
+
+          - name: accommodates
+            data_tests:
+              - not_blank
+
+          - name: price
+            data_tests:
+              - not_blank
+
+          - name: has_availability
+            data_tests:
+              - not_blank
+              - accepted_values:
+                  arguments:
+                    values: ['t', 'f']
+
+          - name: availability_30
+            data_tests:
+              - not_blank
+
+          - name: number_of_reviews
+            data_tests:
+              - not_blank
+
+          - name: source_month
+            data_tests:
+              - not_blank
+
+
+      - name: raw_census_g01
+        columns:
+          - name: lga_code_2016
+            data_tests:
+              - not_blank
+              - unique
+
+
+      - name: raw_census_g02
+        columns:
+          - name: lga_code_2016
+            data_tests:
+              - not_blank
+              - unique
+
+
+      - name: raw_lga_code
+        columns:
+          - name: lga_code
+            data_tests:
+              - not_blank
+              - unique
+
+          - name: lga_name
+            data_tests:
+              - not_blank
+              - unique
+
+
+      - name: raw_lga_suburb
+        columns:
+          - name: lga_name
+            data_tests:
+              - not_blank
+
+          - name: suburb_name
+            data_tests:
+              - not_blank

@@ -1,0 +1,127 @@
+version: 2
+models:
+  - name: silver_listings
+    columns:
+      - name: listing_id
+        data_tests:
+          - not_null
+
+      - name: scrape_id
+        data_tests:
+          - not_null
+
+      - name: scraped_date
+        data_tests:
+          - not_null
+
+      - name: host_id
+        data_tests:
+          - not_null
+
+      - name: listing_neighbourhood
+        data_tests:
+          - not_null
+
+      - name: property_type
+        data_tests:
+          - not_null
+
+      - name: room_type
+        data_tests:
+          - not_null
+
+      - name: accommodates
+        data_tests:
+          - not_null
+
+      - name: price
+        data_tests:
+          - not_null
+
+      - name: has_availability
+        data_tests:
+          - not_null
+
+      - name: availability_30
+        data_tests:
+          - not_null
+
+      - name: source_month
+        data_tests:
+          - not_null
+
+
+  - name: silver_lga_code
+    columns:
+      - name: lga_code
+        data_tests:
+          - not_null
+          - unique
+
+      - name: lga_name
+        data_tests:
+          - not_null
+          - unique
+
+
+  - name: silver_lga_suburb
+    columns:
+      - name: lga_code
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_lga_code')
+                field: lga_code
+
+      - name: lga_name
+        data_tests:
+          - not_null
+
+      - name: suburb_name
+        data_tests:
+          - not_null
+
+
+  - name: silver_census_g01
+    columns:
+      - name: lga_code
+        data_tests:
+          - not_null
+          - unique
+
+
+  - name: silver_census_g02
+    columns:
+      - name: lga_code
+        data_tests:
+          - not_null
+          - unique
+
+
+  - name: silver_property_current
+    columns:
+      - name: listing_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: listing_lga_code
+        data_tests:
+          - not_null
+
+      - name: source_month
+        data_tests:
+          - not_null
+
+
+  - name: silver_host_current
+    columns:
+      - name: host_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: source_month
+        data_tests:
+          - not_null

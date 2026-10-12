@@ -1,0 +1,161 @@
+version: 2
+models:
+  - name: dim_property
+    columns:
+      - name: property_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: listing_id
+        data_tests:
+          - not_null
+
+  - name: dim_host
+    columns:
+      - name: host_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: host_id
+        data_tests:
+          - not_null
+
+  - name: dim_lga
+    columns:
+      - name: lga_code
+        data_tests:
+          - unique
+          - not_null
+
+  - name: dim_suburb
+    columns:
+      - name: suburb_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: lga_code
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_lga')
+                field: lga_code
+
+  - name: dim_month
+    columns:
+      - name: month_key
+        data_tests:
+          - unique
+          - not_null
+
+  - name: fact_listing
+    columns:
+      - name: listing_id
+        data_tests:
+          - not_null
+
+      - name: month_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_month')
+                field: month_key
+
+      - name: property_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_property')
+                field: property_key
+
+      - name: host_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_host')
+                field: host_key
+
+      - name: listing_lga_code
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_lga')
+                field: lga_code
+
+  - name: dm_listing_neighbourhood
+    description: >
+      Monthly listing metrics grouped by listing neighbourhood.
+      Built from the Gold fact table and the historically correct
+      SCD2 Host and Property dimension versions.
+    columns:
+      - name: listing_neighbourhood
+        data_tests:
+          - not_null
+
+      - name: month_year
+        data_tests:
+          - not_null
+
+      - name: active_listing_rate
+        data_tests:
+          - not_null
+
+      - name: number_of_distinct_hosts
+        data_tests:
+          - not_null
+
+      - name: total_number_of_stays
+        data_tests:
+          - not_null
+
+  - name: dm_property_type
+    description: >
+      Monthly listing metrics grouped by property type,
+      room type and accommodates.
+    columns:
+      - name: property_type
+        data_tests:
+          - not_null
+
+      - name: room_type
+        data_tests:
+          - not_null
+
+      - name: accommodates
+        data_tests:
+          - not_null
+
+      - name: month_year
+        data_tests:
+          - not_null
+
+      - name: active_listing_rate
+        data_tests:
+          - not_null
+
+      - name: number_of_distinct_hosts
+        data_tests:
+          - not_null
+
+      - name: total_number_of_stays
+        data_tests:
+          - not_null
+
+  - name: dm_host_neighbourhood
+    description: >
+      Monthly host metrics grouped by the LGA corresponding
+      to host neighbourhood.
+    columns:
+      - name: month_year
+        data_tests:
+          - not_null
+
+      - name: number_of_distinct_hosts
+        data_tests:
+          - not_null
