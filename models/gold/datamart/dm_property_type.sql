@@ -47,13 +47,7 @@ monthly_metrics as (
                 when h.host_is_superhost = true
                 then h.host_id
             end
-        ) / nullif(
-            count(distinct case
-                when h.host_is_superhost is not null
-                then h.host_id
-            end),
-            0
-        ) as superhost_rate,
+        ) / count(distinct h.host_id) as superhost_rate,
         avg(f.review_scores_rating) filter (
             where f.active_listing_flag = 1
         ) as average_review_scores_rating,
